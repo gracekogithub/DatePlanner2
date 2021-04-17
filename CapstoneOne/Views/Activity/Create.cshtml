@@ -9,21 +9,33 @@
         <div class="row">
             <div class="col-12">
                 <div class="form-group row">
-                    <div class="col-6">
+                    <div class="col-4">
                         <label asp-for="ActivityName"></label>
-                        <span asp-validation-for="ActivityName" class="text-danger"></span>
+                       
                     </div>
-                    <div class="col-6">
+                    <div class="col-4">
                         <label asp-for="Budget"></label>
-                        <span asp-validation-for="Budget" class="text-danger"></span>
+                      
+                    </div>
+                    <div class="col-4">
+                        <label asp-for="DateActivityType"></label>
+                       
                     </div>
                 </div>
                 <div class="form-group row">
-                    <div class="col-6">
+                    <div class="col-4">
                         <input asp-for="ActivityName" class="form-control" />
+                        <span asp-validation-for="ActivityName" class="text-danger"></span>
                     </div>
-                    <div class="col-6">
+                    <div class="col-4">
                         <input asp-for="Budget" class="form-control" />
+                        <span asp-validation-for="ActivityName" class="text-danger"></span>
+                    </div>
+                    <div class="col-4">
+                        <select asp-for="DateActivityType" asp-items="@ViewBag.TypeDropDown" class="form-control">
+                           <option selected>--Select Activity Type--</option>
+                        </select>
+                        <span asp-validation-for="DateActivityType" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row">

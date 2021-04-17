@@ -30,6 +30,7 @@ namespace CapstoneOne.Controllers
               Text = i.Name,
               Value =i.Id.ToString()
             });
+            ViewBag.TypeDropDown = TypeDropDown;
             return View();
         }
 
