@@ -1,6 +1,7 @@
 ﻿using CapstoneOne.Data;
 using CapstoneOne.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,10 @@ namespace CapstoneOne.Controllers
         // GET: ProductController/Create
         public IActionResult Create()
         {
+            IEnumerable<SelectListItem> TypeDropDown = _context.DateActivityTypes.Select(i => new SelectListItem { 
+              Text = i.Name,
+              Value =i.Id.ToString()
+            });
             return View();
         }
 
@@ -35,6 +40,7 @@ namespace CapstoneOne.Controllers
         {
             if (ModelState.IsValid)
             {
+                //activity.DateActivityTypeId = 1;
                 _context.DateActivities.Add(activity);
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));

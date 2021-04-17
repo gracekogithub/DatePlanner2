@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CapstoneOne.Migrations
 {
-    public partial class initial : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,6 +44,19 @@ namespace CapstoneOne.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DateActivityTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DateActivityTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -209,7 +222,6 @@ namespace CapstoneOne.Migrations
                     Longitude = table.Column<double>(nullable: false),
                     Latitude = table.Column<double>(nullable: false),
                     UserEmail = table.Column<string>(nullable: true),
-                    Comment = table.Column<string>(nullable: true),
                     IdentityUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -243,6 +255,28 @@ namespace CapstoneOne.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DateActivities",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ActivityName = table.Column<string>(nullable: false),
+                    Budget = table.Column<int>(nullable: false),
+                    Scheduler = table.Column<DateTime>(nullable: true),
+                    DateActivityTypeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DateActivities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DateActivities_DateActivityTypes_DateActivityTypeId",
+                        column: x => x.DateActivityTypeId,
+                        principalTable: "DateActivityTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -345,6 +379,11 @@ namespace CapstoneOne.Migrations
                 column: "IdentityUserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DateActivities_DateActivityTypeId",
+                table: "DateActivities",
+                column: "DateActivityTypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_IdentityUserId",
                 table: "Products",
                 column: "IdentityUserId");
@@ -374,6 +413,9 @@ namespace CapstoneOne.Migrations
                 name: "CustomerProducts");
 
             migrationBuilder.DropTable(
+                name: "DateActivities");
+
+            migrationBuilder.DropTable(
                 name: "Payment");
 
             migrationBuilder.DropTable(
@@ -384,6 +426,9 @@ namespace CapstoneOne.Migrations
 
             migrationBuilder.DropTable(
                 name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "DateActivityTypes");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

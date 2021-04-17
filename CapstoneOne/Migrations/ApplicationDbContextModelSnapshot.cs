@@ -134,10 +134,15 @@ namespace CapstoneOne.Migrations
                     b.Property<int>("Budget")
                         .HasColumnType("int");
 
+                    b.Property<int>("DateActivityTypeId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("Scheduler")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DateActivityTypeId");
 
                     b.ToTable("DateActivities");
                 });
@@ -150,6 +155,7 @@ namespace CapstoneOne.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -479,6 +485,15 @@ namespace CapstoneOne.Migrations
                     b.HasOne("CapstoneOne.Models.Product", "Product")
                         .WithMany("ShoppingCart")
                         .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CapstoneOne.Models.DateActivity", b =>
+                {
+                    b.HasOne("CapstoneOne.Models.DateActivityType", "DateActivityType")
+                        .WithMany()
+                        .HasForeignKey("DateActivityTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
